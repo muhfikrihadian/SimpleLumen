@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="float-left">
-                    <h4 class="m-0 font-weight-bold text-primary">Data Roles</h4>
+                    <h4 class="m-0 font-weight-bold text-primary">Roles Management</h4>
                 </div>
                 <div class="float-right">
                     <a class="btn btn-sm btn-success" href="{{ route('roles.create') }}"> Create New Role</a>

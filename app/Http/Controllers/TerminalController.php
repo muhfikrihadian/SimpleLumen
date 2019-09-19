@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Location;
+use Terminal;
 use Merchant;
+use Location;
 use Auth;
 use Illuminate\Support\Facades\Crypt;
 
-class locationController extends Controller
+class terminalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class locationController extends Controller
      */
     public function index()
     {
-        $data['locations'] = Location::all();
-        return view('location.index')->with($data);
+        $data['terminals'] = Terminal::all();
+        return view('terminal.index')->with($data);
     }
 
     /**
@@ -29,7 +30,8 @@ class locationController extends Controller
     public function create()
     {
         $data['merchants'] = Merchant::all();
-        return view('location.create')->with($data);
+        $data['locations'] = Location::all();
+        return view('terminal.create')->with($data);
     }
 
     /**
@@ -40,17 +42,18 @@ class locationController extends Controller
      */
     public function store(Request $request)
     {
-        $table = new location;
+        $table = new Terminal;
         $table->merchant_id = $request->merchant_id;
         $table->name = $request->name;
-        $table->address = $request->address;
-        $table->city = $request->city;
-        $table->country = $request->country;
-        $table->latitude = $request->latitude;
-        $table->longtitude = $request->longtitude;
+        $table->remarks = $request->remarks;
+        $table->terminal_limit = $request->terminal_limit;
+        $table->latitude = Location::where('id', $request->location_id)->value('latitude');
+        $table->longtitude = Location::where('id', $request->location_id)->value('longtitude');
+        $table->created_by = Auth::user()->id;
+        $table->location_id = $request->location_id;
         $table->save();
 
-        return redirect()->route('location');
+        return redirect()->route('terminal');
     }
 
     /**
@@ -74,8 +77,9 @@ class locationController extends Controller
     {
         $id = Crypt::decryptString($id);
         $data['merchants'] = Merchant::all();
-        $data['location'] = Location::find($id);
-        return view('location.edit')->with($data);
+        $data['locations'] = Location::all();
+        $data['terminal'] = Terminal::find($id);
+        return view('terminal.edit')->with($data);
     }
 
     /**
@@ -88,17 +92,17 @@ class locationController extends Controller
     public function update(Request $request, $id)
     {
         $id = Crypt::decryptString($id);
-        $table = Location::find($id);
+        $table = Terminal::find($id);
         $table->merchant_id = $request->merchant_id;
         $table->name = $request->name;
-        $table->address = $request->address;
-        $table->city = $request->city;
-        $table->country = $request->country;
-        $table->latitude = $request->latitude;
-        $table->longtitude = $request->longtitude;
+        $table->remarks = $request->remarks;
+        $table->terminal_limit = $request->terminal_limit;
+        $table->latitude = Location::where('id', $request->location_id)->value('latitude');
+        $table->longtitude = Location::where('id', $request->location_id)->value('longtitude');
+        $table->location_id = $request->location_id;
         $table->save();
 
-        return redirect()->route('location');
+        return redirect()->route('terminal');
     }
 
     /**
@@ -110,9 +114,9 @@ class locationController extends Controller
     public function destroy($id)
     {
         $id = Crypt::decryptString($id);
-        $table = Location::find($id);
+        $table = Terminal::find($id);
         $table->delete();
 
-        return redirect()->route('location');
+        return redirect()->route('terminal');
     }
 }

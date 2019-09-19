@@ -38,6 +38,24 @@ Route::prefix('merchant')->group(function () {
 	Route::post('{id}/destroy', 'MerchantController@destroy')->name('destroyMerchant');
 });
 
+Route::prefix('terminal')->group(function () {
+	Route::get('/', 'TerminalController@index')->name('terminal');
+	Route::get('create', 'TerminalController@create')->name('createTerminal');
+	Route::post('store', 'TerminalController@store')->name('storeTerminal');
+	Route::get('{id}/edit', 'TerminalController@edit')->name('editTerminal');
+	Route::post('{id}/update', 'TerminalController@update')->name('updateTerminal');
+	Route::post('{id}/destroy', 'TerminalController@destroy')->name('destroyTerminal');
+});
+
+Route::prefix('location')->group(function () {
+	Route::get('/', 'LocationController@index')->name('location');
+	Route::get('create', 'LocationController@create')->name('createLocation');
+	Route::post('store', 'LocationController@store')->name('storeLocation');
+	Route::get('{id}/edit', 'LocationController@edit')->name('editLocation');
+	Route::post('{id}/update', 'LocationController@update')->name('updateLocation');
+	Route::post('{id}/destroy', 'LocationController@destroy')->name('destroyLocation');
+});
+
 /*-------------------------   Harus diakhir-------------------------------*/
 Route::get('{not_found}', 'HomeController@not_found')->name('not_found');
 Route::post('{not_found}', 'HomeController@not_found')->name('not_found');

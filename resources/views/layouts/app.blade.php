@@ -45,6 +45,22 @@
                 </a>
             </li>
             @endcan
+            @can('terminal-list')
+            <li class="nav-item {{ Request::segment(1) == 'terminal' ? 'active' : null }}">
+                <a class="nav-link" href="{{ route('terminal') }}">
+                    <i class="fas fa-fw fa-terminal"></i>
+                    <span>Terminal</span>
+                </a>
+            </li>
+            @endcan
+            @can('location-list')
+            <li class="nav-item {{ Request::segment(1) == 'location' ? 'active' : null }}">
+                <a class="nav-link" href="{{ route('location') }}">
+                    <i class="fas fa-fw fa-map-marker-alt"></i>
+                    <span>Location</span>
+                </a>
+            </li>
+            @endcan
             @can('user-list')
             <li class="nav-item {{ Request::segment(1) == 'users' ? 'active' : null }}">
                 <a class="nav-link" href="{{ route('users.index') }}">

@@ -73,6 +73,7 @@ class MerchantController extends Controller
     public function edit($id)
     {
         $id = Crypt::decryptString($id);
+        $data['groups'] = DB::table('roles')->all();
         $data['merchant'] = Merchant::find($id);
         return view('merchant.edit')->with($data);
     }
