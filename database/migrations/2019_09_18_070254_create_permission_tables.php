@@ -89,14 +89,31 @@ class CreatePermissionTables extends Migration
         $permissions = array(
             array('description' => 'Config','name' => 'config-list','group' => 'config'),
             array('description' => 'Report','name' => 'report-list','group' => 'report'),
+
             array('description' => 'User List', 'name' => 'user-list', 'group' => 'user'),
             array('description' => 'User Create', 'name' => 'user-create', 'group' => 'user'),
             array('description' => 'User Edit', 'name' => 'user-edit', 'group' => 'user'),
             array('description' => 'User Delete', 'name' => 'user-delete', 'group' => 'user'),
+
             array('description' => 'Role List', 'name' => 'role-list', 'group' => 'role'),
             array('description' => 'Role Create', 'name' => 'role-create', 'group' => 'role'),
             array('description' => 'Role Edit', 'name' => 'role-edit', 'group' => 'role'),
             array('description' => 'Role Delete', 'name' => 'role-delete', 'group' => 'role'),
+
+            array('description' => 'Merchant List', 'name' => 'merchant-list', 'group' => 'merchant'),
+            array('description' => 'Merchant Create', 'name' => 'merchant-create', 'group' => 'merchant'),
+            array('description' => 'Merchant Edit', 'name' => 'merchant-edit', 'group' => 'merchant'),
+            array('description' => 'Merchant Delete', 'name' => 'merchant-delete', 'group' => 'merchant'),
+
+            array('description' => 'Terminal List', 'name' => 'terminal-list', 'group' => 'terminal'),
+            array('description' => 'Terminal Create', 'name' => 'terminal-create', 'group' => 'terminal'),
+            array('description' => 'Terminal Edit', 'name' => 'terminal-edit', 'group' => 'terminal'),
+            array('description' => 'Terminal Delete', 'name' => 'terminal-delete', 'group' => 'terminal'),
+
+            array('description' => 'Location List', 'name' => 'location-list', 'group' => 'location'),
+            array('description' => 'Location Create', 'name' => 'location-create', 'group' => 'location'),
+            array('description' => 'Location Edit', 'name' => 'location-edit', 'group' => 'location'),
+            array('description' => 'Location Delete', 'name' => 'location-delete', 'group' => 'location'),
         );
 
         foreach ($permissions as $permission) {

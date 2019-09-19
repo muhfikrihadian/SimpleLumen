@@ -37,19 +37,30 @@
                     <span>Report</span>
                 </a>
             </li>
-            <hr class="sidebar-divider my-0">
+            @can('merchant-list')
+            <li class="nav-item {{ Request::segment(1) == 'merchant' ? 'active' : null }}">
+                <a class="nav-link" href="{{ route('merchant') }}">
+                    <i class="fas fa-fw fa-store"></i>
+                    <span>Merchant</span>
+                </a>
+            </li>
+            @endcan
+            @can('user-list')
             <li class="nav-item {{ Request::segment(1) == 'users' ? 'active' : null }}">
                 <a class="nav-link" href="{{ route('users.index') }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Users</span>
                 </a>
             </li>
+            @endcan
+            @can('role-list')
             <li class="nav-item {{ Request::segment(1) == 'roles' ? 'active' : null }}">
                 <a class="nav-link" href="{{ route('roles.index') }}">
                     <i class="fas fa-fw fa-user-tag"></i>
                     <span>Roles</span>
                 </a>
             </li>
+            @endcan
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
