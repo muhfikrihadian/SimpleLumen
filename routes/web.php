@@ -18,6 +18,8 @@ Route::resource('roles','RoleController');
 Route::post('roles/{id}', 'RoleController@update');
 Route::post('roles/{id}/delete', 'RoleController@destroy')->name('rolesDestroy');
 Route::resource('users','UserController');
+Route::post('users/{id}', 'UserController@update');
+Route::post('users/{id}/delete', 'UserController@destroy')->name('usersDestroy');
 
 Route::prefix('config')->group(function () {
 	Route::get('/', 'ConfigController@index')->name('config');

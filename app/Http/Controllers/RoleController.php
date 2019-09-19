@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use Illuminate\Support\Facades\Crypt;
 
 class RoleController extends Controller
 {
@@ -109,6 +110,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $id = Crypt::decryptString($id);
     	$data['role'] = Role::find($id);
     	$data['permission'] = Permission::groupBy('group')->orderBy('group', 'asc')->orderBy('name', 'asc')->orderBy('id', 'asc')->get();
         $data['segment'] = Permission::selectRaw("`id`, REPLACE(`name`, CONCAT(`group`,'-'), '') AS `segment`")->groupBy('segment')->orderBy('segment', 'desc')->get();
@@ -141,6 +143,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = Crypt::decryptString($id);
     	$this->validate($request, [
     		'name' => 'required',
     		'permission' => 'required',
@@ -166,6 +169,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $id = Crypt::decryptString($id);
     	DB::table("roles")->where('id',$id)->delete();
     	return redirect()->route('roles.index')
     	->with('success','Role deleted successfully');

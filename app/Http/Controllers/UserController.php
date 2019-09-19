@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Spatie\Permission\Traits\HasRole;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -84,7 +85,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    {   
     	$user = User::find($id);
     	return view('users.show',compact('user'));
     }
@@ -97,6 +98,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $id = Crypt::decryptString($id);
     	$user = User::find($id);
     	$roles = Role::pluck('name','name')->all();
     	$userRole = $user->roles->pluck('name','name')->all();
@@ -114,6 +116,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $id = Crypt::decryptString($id);
     	$this->validate($request, [
     		'name' => 'required',
     		'email' => 'required|email|unique:users,email,'.$id,
@@ -150,6 +153,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $id = Crypt::decryptString($id);
     	User::find($id)->delete();
     	return redirect()->route('users.index')
     	->with('success','User deleted successfully');
