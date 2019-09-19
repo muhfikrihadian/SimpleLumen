@@ -93,7 +93,9 @@
             <div id="content">
                 <div class="container-fluid py-4">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{{ Request::segment(1) != null ? ucfirst(Request::segment(1)) : 'Dashboard' }}</h1>
+                        <h1 class="h3 mb-0 text-gray-800">
+                            {!! App\User::breadcumb() !!}
+                        </h1>
                     </div>
                     @yield('content')
                 </div>

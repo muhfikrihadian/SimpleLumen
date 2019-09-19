@@ -59,4 +59,23 @@ class User extends Authenticatable
 
         return config('app.name', 'Laravel');
     }
+
+    public static function breadcumb()
+    {
+        if (\Request::segment(1) != null) {
+            $breadcumb = ucfirst(\Request::segment(1));
+        }
+        else {
+            $breadcumb = 'Dashboard';
+        }
+
+        if (\Request::segment(2) != null && strlen(\Request::segment(2)) <= 15) {
+            $breadcumb .= '&nbsp;<i class="fas fa-fw fa-angle-right"></i>&nbsp;'.ucfirst(\Request::segment(2));
+        }
+
+        if (\Request::segment(3) != null) {
+            $breadcumb .= '&nbsp;<i class="fas fa-fw fa-angle-right"></i>&nbsp;'.ucfirst(\Request::segment(3));
+        }
+        return $breadcumb; 
+    }
 }
