@@ -30,5 +30,4 @@ class HomeController extends Controller
     {
         abort('404');
     }
-    
 }

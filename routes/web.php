@@ -13,7 +13,6 @@
 
 Auth::routes(['register' => false,'reset' => false,'verify' => false,]);
 
-
 Route::get('/', 'HomeController@index')->name('home');
 Route::resource('roles','RoleController');
 Route::post('roles/{id}', 'RoleController@update');

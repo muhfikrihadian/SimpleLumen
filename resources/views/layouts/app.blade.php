@@ -56,71 +56,75 @@
                 </a>
             </li>
             @endcan
-            @can('role-list')
-            <li class="nav-item {{ Request::segment(1) == 'roles' ? 'active' : null }}">
-                <a class="nav-link collapsed" href="#users" data-toggle="collapse" data-target="#collapsePagesUsers" aria-expanded="true" aria-controls="collapsePages">
-                  <i class="fas fa-fw fa-users"></i>
-                  <span>Users Setting</span>
-              </a>
-              <div id="collapsePagesUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ route('users.index') }}">
+            @if(app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role-list') || app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('user-list'))
+                <li class="nav-item {{ Request::segment(1) == 'roles' || Request::segment(1) == 'users' ? 'active' : null }}">
+                    <a class="nav-link collapsed" href="#users" data-toggle="collapse" data-target="#collapsePagesUsers" aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-users"></i>
-                        <span>Users</span>
+                        <span>Users Setting</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('roles.index') }}">
-                        <i class="fas fa-fw fa-user-tag"></i>
-                        <span>Roles</span>
+                    <div id="collapsePagesUsers" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('user-list')
+                            <a class="collapse-item {{ Request::segment(1) == 'users' ? 'active' : null }}" href="{{ route('users.index') }}">
+                                <i class="fas fa-fw fa-users"></i>
+                                <span>Users</span>
+                            </a>
+                            @endcan
+                            @can('role-list')
+                            <a class="collapse-item {{ Request::segment(1) == 'roles' ? 'active' : null }}" href="{{ route('roles.index') }}">
+                                <i class="fas fa-fw fa-user-tag"></i>
+                                <span>Roles</span>
+                            </a>
+                            @endcan
+                        </div>
+                    </div>
+                </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#settings" data-toggle="collapse" data-target="#collapsePagesSettings" aria-expanded="true" aria-controls="collapsePages">
+                  <i class="fas fa-cog"></i>
+                  <span>Settings</span>
+              </a>
+              <div id="collapsePagesSettings" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a class="collapse-item nav-item {{ Request::segment(1) == 'config' ? 'active' : null }}" href="{{ route('config') }}">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Config</span>
+                    </a>
+                    <a class="collapse-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-fw fa-sign-out-alt"></i>
+                        <span>Logout</span>
                     </a>
                 </div>
             </div>
         </li>
-        @endcan
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#settings" data-toggle="collapse" data-target="#collapsePagesSettings" aria-expanded="true" aria-controls="collapsePages">
-              <i class="fas fa-cog"></i>
-              <span>Settings</span>
-          </a>
-          <div id="collapsePagesSettings" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Profile</span>
-                </a>
-                <a class="collapse-item nav-item {{ Request::segment(1) == 'config' ? 'active' : null }}" href="{{ route('config') }}">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Config</span>
-                </a>
-                <a class="collapse-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-fw fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+    </ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="container-fluid py-4">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">
+                        {!! App\User::breadcumb() !!}
+                    </h1>
+                </div>
+                @yield('content')
             </div>
         </div>
-    </li>
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website {{ date('Y') != '2019' ? '2019 - '.date('Y') : date('Y') }}</span>
+                </div>
+            </div>
+        </footer>
     </div>
-</ul>
-<div id="content-wrapper" class="d-flex flex-column">
-    <div id="content">
-        <div class="container-fluid py-4">
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">
-                    {!! App\User::breadcumb() !!}
-                </h1>
-            </div>
-            @yield('content')
-        </div>
-    </div>
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website {{ date('Y') != '2019' ? '2019 - '.date('Y') : date('Y') }}</span>
-            </div>
-        </div>
-    </footer>
-</div>
 </div>
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
